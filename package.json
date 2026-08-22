@@ -1,0 +1,55 @@
+{
+  "name": "thor-cursor",
+  "version": "1.0.0",
+  "description": "A premium cinematic Mjolnir-inspired lightning cursor for modern websites. Framework-independent, canvas-based, zero dependencies.",
+  "type": "module",
+  "main": "./dist/thor-cursor.js",
+  "module": "./dist/thor-cursor.esm.js",
+  "browser": "./dist/thor-cursor.min.js",
+  "unpkg": "./dist/thor-cursor.min.js",
+  "jsdelivr": "./dist/thor-cursor.min.js",
+  "exports": {
+    ".": {
+      "types": "./dist/thor-cursor.d.ts",
+      "import": "./dist/thor-cursor.esm.js",
+      "require": "./dist/thor-cursor.js",
+      "default": "./dist/thor-cursor.esm.js"
+    },
+    "./src": "./src/index.js",
+    "./dist/*": "./dist/*"
+  },
+  "files": [
+    "src",
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "node build.js",
+    "test": "node test/run.js",
+    "demo": "node serve.js",
+    "prepublishOnly": "node build.js && node test/run.js"
+  },
+  "keywords": [
+    "cursor",
+    "custom-cursor",
+    "lightning",
+    "mjolnir",
+    "thor",
+    "canvas",
+    "mouse-trail",
+    "animation",
+    "particles",
+    "vanilla-js"
+  ],
+  "author": "",
+  "license": "MIT",
+  "sideEffects": false,
+  "devDependencies": {
+    "jsdom": "^24.0.0"
+  },
+  "engines": {
+    "node": ">=16"
+  },
+  "types": "./dist/thor-cursor.d.ts"
+}

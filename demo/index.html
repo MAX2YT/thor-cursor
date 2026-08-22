@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MJOLNIR — thor-cursor</title>
+<meta name="description" content="A premium cinematic Mjolnir-inspired lightning cursor for modern websites.">
+<link rel="stylesheet" href="demo.css">
+</head>
+<body>
+
+<!-- Atmospheric backdrop: storm clouds + drifting motes, pure CSS/canvas. -->
+<div class="storm" aria-hidden="true">
+  <div class="cloud cloud-1"></div>
+  <div class="cloud cloud-2"></div>
+  <div class="cloud cloud-3"></div>
+  <div class="vignette"></div>
+</div>
+<canvas id="motes" aria-hidden="true"></canvas>
+
+<header class="nav">
+  <a class="brand" href="#top">
+    <span class="brand-mark" aria-hidden="true"></span>
+    <span>thor-cursor</span>
+  </a>
+  <nav class="nav-links">
+    <a href="#move">Movement</a>
+    <a href="#impact">Impact</a>
+    <a href="#drag">Trails</a>
+    <a href="#playground">Playground</a>
+    <a href="#integrate">Integrate</a>
+  </nav>
+  <button class="btn btn-ghost" id="toggle" type="button">Disable cursor</button>
+</header>
+
+<main id="top">
+
+  <!-- ------------------------------------------------------------ hero -->
+  <section class="hero">
+    <p class="eyebrow">Canvas-based · zero dependencies · ~11&nbsp;kB gzipped</p>
+    <h1 class="title">MJOLNIR</h1>
+    <p class="lede">
+      A cinematic lightning cursor. Your pointer becomes an enchanted
+      war-hammer that leaves branching electricity in its wake and cracks
+      the page open when you click.
+    </p>
+    <div class="hero-actions">
+      <button class="btn btn-primary" id="strike-hero" type="button">Summon a strike</button>
+      <a class="btn btn-ghost" href="#integrate">Integration guide</a>
+    </div>
+    <p class="hint">
+      <strong>Move</strong> to trail sparks · <strong>click</strong> to slam ·
+      <strong>hold and drag</strong> for a storm
+    </p>
+  </section>
+
+  <!-- -------------------------------------------------------- movement -->
+  <section class="section" id="move">
+    <div class="section-head">
+      <span class="kicker">01 — Motion</span>
+      <h2>It reacts to how you move</h2>
+      <p>
+        The hammer eases toward the pointer, tilts into its direction of
+        travel, and bobs gently when you leave it alone. Velocity drives
+        the tilt, the glow and the amount of electrical activity — so slow
+        drifting stays subtle and fast sweeps throw sparks.
+      </p>
+    </div>
+    <div class="pads">
+      <div class="pad">
+        <span class="pad-num">Slow</span>
+        <p>Drift across this panel. Barely a whisper of static.</p>
+      </div>
+      <div class="pad">
+        <span class="pad-num">Fast</span>
+        <p>Now whip the pointer back and forth. Sparks shed off the head.</p>
+      </div>
+      <div class="pad">
+        <span class="pad-num">Idle</span>
+        <p>Stop moving. The hammer floats and pulses on its own.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------------------------------------------------------- impact -->
+  <section class="section" id="impact">
+    <div class="section-head">
+      <span class="kicker">02 — Impact</span>
+      <h2>Every click lands like thunder</h2>
+      <p>
+        A click swings the hammer down, detonates a white-hot flash, fires
+        branching bolts outward, kicks up sparks and pushes a shockwave
+        ring — then recoils. The whole event resolves in well under a
+        second so it never gets in your way.
+      </p>
+    </div>
+    <div class="strike-zone" id="strike-zone">
+      <div class="strike-zone-label">Click anywhere in this arena</div>
+      <div class="strike-grid" aria-hidden="true"></div>
+    </div>
+    <div class="chip-row">
+      <button class="chip" data-strength="0.6" type="button">Light tap</button>
+      <button class="chip" data-strength="1" type="button">Standard</button>
+      <button class="chip" data-strength="2" type="button">Heavy</button>
+      <button class="chip" data-strength="3.5" type="button">Ragnarök</button>
+    </div>
+  </section>
+
+  <!-- ----------------------------------------------------------- drag -->
+  <section class="section" id="drag">
+    <div class="section-head">
+      <span class="kicker">03 — Trails</span>
+      <h2>Hold the button and paint with lightning</h2>
+      <p>
+        While dragging, the cursor emits a continuous chain of independently
+        jittered arcs — branching, flickering, and short-lived, so it reads
+        as electricity rather than a smooth neon line. Nothing is ever left
+        behind on the page.
+      </p>
+    </div>
+    <div class="canvas-pad" id="drag-pad">
+      <span>Press, hold, and scribble here</span>
+    </div>
+  </section>
+
+  <!-- ------------------------------------------------------ playground -->
+  <section class="section" id="playground">
+    <div class="section-head">
+      <span class="kicker">04 — Configuration</span>
+      <h2>Tune it live</h2>
+      <p>
+        Every control below maps to one option in the config object. Whatever
+        you land on, copy the snippet at the bottom straight into your project.
+      </p>
+    </div>
+
+    <div class="playground">
+      <div class="controls">
+        <label class="control">
+          <span class="control-label">Intensity <em data-out="intensity">1</em></span>
+          <input type="range" id="c-intensity" min="0" max="3" step="0.1" value="1">
+        </label>
+        <label class="control">
+          <span class="control-label">Hammer size <em data-out="hammerSize">34</em>px</span>
+          <input type="range" id="c-hammerSize" min="16" max="72" step="1" value="34">
+        </label>
+        <label class="control">
+          <span class="control-label">Trail length <em data-out="trailLength">20</em></span>
+          <input type="range" id="c-trailLength" min="4" max="60" step="1" value="20">
+        </label>
+        <label class="control">
+          <span class="control-label">Particle density <em data-out="particleDensity">1</em></span>
+          <input type="range" id="c-particleDensity" min="0" max="3" step="0.1" value="1">
+        </label>
+        <label class="control">
+          <span class="control-label">Glow <em data-out="glowIntensity">1</em></span>
+          <input type="range" id="c-glowIntensity" min="0" max="2.5" step="0.1" value="1">
+        </label>
+        <label class="control">
+          <span class="control-label">Click strength <em data-out="clickStrength">1</em></span>
+          <input type="range" id="c-clickStrength" min="0.2" max="4" step="0.1" value="1">
+        </label>
+        <label class="control">
+          <span class="control-label">Animation speed <em data-out="animationSpeed">1</em></span>
+          <input type="range" id="c-animationSpeed" min="0.4" max="2.5" step="0.1" value="1">
+        </label>
+        <label class="control">
+          <span class="control-label">Follow tightness <em data-out="followEase">0.28</em></span>
+          <input type="range" id="c-followEase" min="0.06" max="1" step="0.02" value="0.28">
+        </label>
+
+        <div class="control-row">
+          <label class="switch">
+            <input type="checkbox" id="c-trail" checked>
+            <span>Trail</span>
+          </label>
+          <label class="switch">
+            <input type="checkbox" id="c-clickEffect" checked>
+            <span>Click effect</span>
+          </label>
+          <label class="switch">
+            <input type="checkbox" id="c-glow" checked>
+            <span>Glow</span>
+          </label>
+          <label class="switch">
+            <input type="checkbox" id="c-hoverReact" checked>
+            <span>Hover react</span>
+          </label>
+        </div>
+
+        <div class="control-row">
+          <span class="control-label">Palette</span>
+          <div class="swatches" id="swatches">
+            <button class="swatch is-on" type="button" data-color="#7fd4ff" data-accent="#b98cff" style="--sw:#7fd4ff" aria-label="Storm blue"></button>
+            <button class="swatch" type="button" data-color="#8affc1" data-accent="#4fe0a0" style="--sw:#8affc1" aria-label="Bifrost green"></button>
+            <button class="swatch" type="button" data-color="#ffb865" data-accent="#ff7a45" style="--sw:#ffb865" aria-label="Forge amber"></button>
+            <button class="swatch" type="button" data-color="#ff8ab5" data-accent="#c86bff" style="--sw:#ff8ab5" aria-label="Rune pink"></button>
+            <button class="swatch" type="button" data-color="#ffffff" data-accent="#cfe8ff" style="--sw:#ffffff" aria-label="Pure white"></button>
+          </div>
+        </div>
+
+        <div class="control-row">
+          <button class="btn btn-ghost btn-sm" id="reset" type="button">Reset defaults</button>
+          <button class="btn btn-ghost btn-sm" id="copy" type="button">Copy config</button>
+        </div>
+      </div>
+
+      <div class="readout">
+        <div class="stat-grid">
+          <div class="stat"><span class="stat-num" id="fps">—</span><span class="stat-key">fps</span></div>
+          <div class="stat"><span class="stat-num" id="s-particles">0</span><span class="stat-key">particles</span></div>
+          <div class="stat"><span class="stat-num" id="s-arcs">0</span><span class="stat-key">live arcs</span></div>
+          <div class="stat"><span class="stat-num" id="s-dpr">—</span><span class="stat-key">dpr</span></div>
+        </div>
+        <pre class="snippet"><code id="snippet"></code></pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- -------------------------------------------------- interaction QA -->
+  <section class="section" id="interaction">
+    <div class="section-head">
+      <span class="kicker">05 — Never in the way</span>
+      <h2>The page still works, completely</h2>
+      <p>
+        The overlay is <code>pointer-events: none</code>, so nothing below it
+        is ever blocked. Text stays selectable, inputs keep their caret,
+        scrollbars and dropdowns behave. Try everything here.
+      </p>
+    </div>
+
+    <div class="cards">
+      <article class="card">
+        <h3>Form controls</h3>
+        <form class="form" onsubmit="return false">
+          <label class="field">
+            <span>Name of the realm</span>
+            <input type="text" placeholder="Asgard" autocomplete="off">
+          </label>
+          <label class="field">
+            <span>Weapon class</span>
+            <select>
+              <option>Hammer</option>
+              <option>Axe</option>
+              <option>Spear</option>
+            </select>
+          </label>
+          <label class="field">
+            <span>Inscription</span>
+            <textarea rows="2" placeholder="Whosoever holds this cursor…"></textarea>
+          </label>
+          <label class="switch">
+            <input type="checkbox" checked>
+            <span>Worthy</span>
+          </label>
+          <button class="btn btn-primary btn-sm" type="submit">Submit</button>
+        </form>
+      </article>
+
+      <article class="card">
+        <h3>Links &amp; buttons</h3>
+        <p>The hammer brightens and swells over anything clickable.</p>
+        <div class="chip-row">
+          <a class="chip" href="#interaction">A link</a>
+          <button class="chip" type="button">A button</button>
+          <span class="chip" role="button" tabindex="0">ARIA button</span>
+        </div>
+        <p class="muted">Hover each one and watch the glow respond.</p>
+      </article>
+
+      <article class="card">
+        <h3>Scroll &amp; select</h3>
+        <div class="scroller">
+          <p>Scroll this panel — the cursor tracks correctly over scrolled content because hover state is re-evaluated on scroll.</p>
+          <p>Now select this paragraph with a click-drag. Selection works normally; the lightning trail draws over it without interfering.</p>
+          <p>Both the page and this inner box scroll independently.</p>
+          <p>Keep going, there is more text down here to prove the point.</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ------------------------------------------------------- integrate -->
+  <section class="section" id="integrate">
+    <div class="section-head">
+      <span class="kicker">06 — Integration</span>
+      <h2>Drop it into anything</h2>
+      <p>No build step required, and no framework assumed.</p>
+    </div>
+    <div class="code-cards">
+      <article class="card">
+        <h3>Plain HTML</h3>
+<pre class="snippet"><code>&lt;script src="thor-cursor.min.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+  ThorCursor.init();
+&lt;/script&gt;</code></pre>
+      </article>
+      <article class="card">
+        <h3>ES modules</h3>
+<pre class="snippet"><code>import { ThorCursor } from 'thor-cursor';
+
+ThorCursor.init({ intensity: 1.2 });</code></pre>
+      </article>
+      <article class="card">
+        <h3>React / Next.js</h3>
+<pre class="snippet"><code>useEffect(() =&gt; {
+  const c = ThorCursor.create();
+  return () =&gt; c.destroy();
+}, []);</code></pre>
+      </article>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <p>
+    <strong>thor-cursor</strong> · MIT licensed · original hammer artwork drawn
+    procedurally on canvas.
+  </p>
+  <p class="muted small">
+    An original Mjolnir-inspired fantasy design. Not affiliated with,
+    endorsed by, or derived from any Marvel or Disney property.
+  </p>
+  <p class="muted small" id="touch-note" hidden>
+    Touch device detected — the custom cursor is disabled automatically and
+    your native input is untouched.
+  </p>
+</footer>
+
+<script src="../dist/thor-cursor.js"></script>
+<script src="demo.js"></script>
+</body>
+</html>
