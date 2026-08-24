@@ -2,12 +2,23 @@
   "name": "thor-cursor",
   "version": "1.0.0",
   "description": "A premium cinematic Mjolnir-inspired lightning cursor for modern websites. Framework-independent, canvas-based, zero dependencies.",
+  "author": "MAX2YT",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MAX2YT/thor-cursor.git"
+  },
+  "homepage": "https://github.com/MAX2YT/thor-cursor#readme",
+  "bugs": {
+    "url": "https://github.com/MAX2YT/thor-cursor/issues"
+  },
   "type": "module",
   "main": "./dist/thor-cursor.js",
   "module": "./dist/thor-cursor.esm.js",
   "browser": "./dist/thor-cursor.min.js",
   "unpkg": "./dist/thor-cursor.min.js",
   "jsdelivr": "./dist/thor-cursor.min.js",
+  "types": "./dist/thor-cursor.d.ts",
   "exports": {
     ".": {
       "types": "./dist/thor-cursor.d.ts",
@@ -42,14 +53,11 @@
     "particles",
     "vanilla-js"
   ],
-  "author": "",
-  "license": "MIT",
   "sideEffects": false,
   "devDependencies": {
     "jsdom": "^24.0.0"
   },
   "engines": {
     "node": ">=16"
-  },
-  "types": "./dist/thor-cursor.d.ts"
+  }
 }
